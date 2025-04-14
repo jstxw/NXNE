@@ -1,16 +1,7 @@
-# flutter_application_3
+# NXNE Application (IMCE 2025)
 
-A new Flutter project.
+NXNE: This image detection app is a powerful, cross-platform tool built using Flutter and integrated with a custom-trained YOLOv8 model. Designed for real-time object detection, the app enables users to scan and identify objects instantly using their mobile device's camera. Built for the 2025 ICDC (International Career Developement Conference) in Florida. 
 
-## Getting Started
+The underlying model was trained on a diverse and well-labeled dataset sourced from the Open Images Dataset V7 and prepared using Roboflow to ensure compatibility with YOLOv8. Training was conducted in Google Colab, utilizing free GPU acceleration for efficiency and scalability.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The app delivers fast and accurate detection performance, whether running on Android or iOS. iOS deployment was achieved through a virtual macOS setup and Xcode, enabling smooth testing and distribution on Apple devices. The result is a streamlined, responsive, and highly functional image recognition app, ideal for real-time use in a variety of environments.
