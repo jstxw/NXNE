@@ -6,16 +6,15 @@
 
   late List<CameraDescription> cameras;
 
+  Offset _dragPosition = const Offset(65, 30); // initial position
+
 Future<void> main() async{
     WidgetsFlutterBinding.ensureInitialized();
       cameras = await availableCameras();
       runApp(const MyApp());
   }
-  
-  
   class MyApp extends StatelessWidget {
     const MyApp({super.key});
-
 
     @override
     Widget build(BuildContext context) {
@@ -24,7 +23,6 @@ Future<void> main() async{
       );
   }
   }
-
   class YoloVideo extends StatefulWidget {
     final List<CameraDescription> camerass;
     const YoloVideo({super.key, required this.camerass});// YoloVideo accepts the camera 
@@ -86,6 +84,16 @@ Future<void> main() async{
       }
     
     return Scaffold(
+      appBar: AppBar(
+    title: const Text('Live Scanner'),
+    backgroundColor: Colors.white, // Optional styling
+    leading: IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        Navigator.pop(context);
+      }
+    )
+      ),
     body: Stack(
       fit: StackFit.expand,
       children: [
@@ -93,10 +101,18 @@ Future<void> main() async{
           aspectRatio: controller.value.aspectRatio,
           child: CameraPreview(controller),
         ),
+        Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          height: 150,
+          width: 1000, 
+          color: Colors.black,
+        ),
+      ),
         ...displayBoxesAroundRecognizedObjects(size),
         buildLiveDetectionBox(),
         Positioned(
-          bottom: 75,
+          bottom: 45,
           width: MediaQuery.of(context).size.width,
           child: Container(
             height: 80,
@@ -132,8 +148,10 @@ Future<void> main() async{
                   ),
           ), // 👈 closing Container
         ), // 👈 closing Positioned
-      ],
+    
+       ],
     ),
+    
   );
   }
 
@@ -218,8 +236,15 @@ Future<void> main() async{
 }
 Widget buildLiveDetectionBox() {
   return Positioned(
-    left: 30,
-    top:50,
+    left: _dragPosition.dx,
+    top: _dragPosition.dy,
+    child: GestureDetector(
+      onPanUpdate: (details) {
+        setState(() {
+          _dragPosition += details.delta;
+        });
+      },
+  
     child: Container(
       constraints: BoxConstraints(
     minWidth: 250,
@@ -234,7 +259,7 @@ Widget buildLiveDetectionBox() {
       child: yoloResults.isEmpty
           ? const Text(
               'No detections',
-              style: TextStyle(color: Colors.white, fontSize: 12),
+              style: TextStyle(color: Colors.white, fontSize: 30),
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,7 +274,8 @@ Widget buildLiveDetectionBox() {
               }).toList(),
             ),
     ),
+  )
   );
-  
-  }
+   
 }
+  }
